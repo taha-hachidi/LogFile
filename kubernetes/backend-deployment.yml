@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: logfile-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: docker.io/tahahachidi/log-app_backend:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: log-volume
+              mountPath: /app/logs/FINEA_TRACE-2022-11-23-1.log
+              subPath: FINEA_TRACE-2022-11-23-1.log
+      volumes:
+        - name: log-volume
+          hostPath:
+            path: /mnt/logs
+            type: Directory
