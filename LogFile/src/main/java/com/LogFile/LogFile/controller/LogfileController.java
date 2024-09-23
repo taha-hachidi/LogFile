@@ -49,6 +49,7 @@ public class LogfileController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file.");
         }
+
     }
 
     private List<LogfileDTO> parseLogFile(MultipartFile file) {
