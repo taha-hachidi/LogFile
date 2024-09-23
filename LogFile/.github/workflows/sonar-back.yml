@@ -28,7 +28,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn sonar:sonar \
-            -Dsonar.projectKey=mon-projet_backend \
-            -Dsonar.organization=mon-organisation \
+            -Dsonar.projectKey=taha-hachidi_LogFile \
+            -Dsonar.organization=taha-hachidi \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
