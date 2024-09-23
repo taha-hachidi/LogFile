@@ -1,0 +1,52 @@
+name: SonarCloud Analysis
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sonar-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+      - name: Build backend
+        run: mvn clean install -f LogFile/pom.xml
+      - name: SonarCloud Scan Backend
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=taha-hachidi_LogFile_LogFile \
+            -Dsonar.organization=taha-hachidi \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -f backend/pom.xml
+
+  sonar-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Build frontend
+        run: npm install --prefix frontend
+      - name: SonarCloud Scan Frontend
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          npx sonar-scanner \
+            -Dsonar.projectKey=taha-hachidi_LogFile_logfile-application \
+            -Dsonar.organization=taha-hachidi \
+            -Dsonar.sources=frontend/src \
+            -Dsonar.exclusions=frontend/node_modules/**,frontend/**/*.test.js \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
