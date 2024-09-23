@@ -1,7 +1,6 @@
 package com.LogFile.LogFile.controller;
 
 import com.LogFile.LogFile.dto.LogfileDTO;
-import com.LogFile.LogFile.model.Logfile;
 import com.LogFile.LogFile.service.ILogfileService;
 import org.modelmapper.internal.bytebuddy.build.BuildLogger;
 import org.springframework.beans.factory.annotation.Autowired;
